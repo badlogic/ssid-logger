@@ -1,0 +1,35 @@
+# Android / Android Studio
+app/local.properties
+app/.gradle/
+app/build/
+app/app/build/
+app/captures/
+app/.externalNativeBuild/
+app/.cxx/
+*.apk
+*.aab
+*.ap_
+*.dex
+*.class
+*.log
+*.iml
+.idea/
+.DS_Store
+
+# Node.js
+server/node_modules/
+server/npm-debug.log*
+server/yarn-debug.log*
+server/yarn-error.log*
+server/.env
+server/.env.local
+
+# Screenshots and test files
+*.png
+*.jpg
+emulator_screenshot.png
+emulator_ui.png
+
+# OS files
+.DS_Store
+Thumbs.db
