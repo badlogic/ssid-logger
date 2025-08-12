@@ -2,6 +2,12 @@
 
 An Android application that monitors Wi-Fi network changes and logs SSID transitions to a remote endpoint.
 
+## 📱 Download
+
+**[Download Latest APK →](https://github.com/badlogic/ssid-logger/releases/latest)**
+
+Direct APK downloads available - no unzipping required! New builds are automatically created for every push to main.
+
 ## Features
 
 - Prompts for endpoint URL on startup
