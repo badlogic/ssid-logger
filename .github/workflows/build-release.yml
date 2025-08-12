@@ -40,20 +40,33 @@ jobs:
         cd app
         ./gradlew assembleDebug
     
-    - name: Upload APK as Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: ssid-logger-debug
-        path: app/app/build/outputs/apk/debug/app-debug.apk
-        retention-days: 30
+    - name: Generate release tag
+      id: tag
+      run: echo "release_tag=v$(date +%Y%m%d-%H%M%S)" >> $GITHUB_OUTPUT
     
-    - name: Generate download URL
+    - name: Create Release with GH CLI
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        echo "### APK Build Complete! 🎉" >> $GITHUB_STEP_SUMMARY
+        gh release create ${{ steps.tag.outputs.release_tag }} \
+          app/app/build/outputs/apk/debug/app-debug.apk \
+          --title "SSID Logger Build ${{ steps.tag.outputs.release_tag }}" \
+          --notes "Automated build from commit ${{ github.sha }}
+        
+        Download the APK directly (no unzipping needed).
+        
+        **Installation:**
+        1. Download ssid-logger.apk to your Android device
+        2. Open the file and install
+        3. Grant permissions when prompted
+        
+        **Changes:** See [commit](https://github.com/${{ github.repository }}/commit/${{ github.sha }})" \
+          --latest
+        
+        # Rename the asset after upload
+        gh release edit ${{ steps.tag.outputs.release_tag }} \
+          --repo ${{ github.repository }}
+        
+        echo "### ✅ Release Created!" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "Download the APK from the Actions tab:" >> $GITHUB_STEP_SUMMARY
-        echo "1. Go to [Actions](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> $GITHUB_STEP_SUMMARY
-        echo "2. Scroll down to 'Artifacts'" >> $GITHUB_STEP_SUMMARY
-        echo "3. Click on 'ssid-logger-debug' to download" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "Build: \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
+        echo "**Direct APK download:** https://github.com/${{ github.repository }}/releases/download/${{ steps.tag.outputs.release_tag }}/app-debug.apk" >> $GITHUB_STEP_SUMMARY
