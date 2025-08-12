@@ -39,44 +39,21 @@ jobs:
       run: |
         cd app
         ./gradlew assembleDebug
-      
-    - name: Generate release tag
-      id: tag
-      run: echo "release_tag=build-$(date +%Y%m%d-%H%M%S)-$(echo ${GITHUB_SHA} | cut -c1-7)" >> $GITHUB_OUTPUT
     
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Upload APK as Artifact
+      uses: actions/upload-artifact@v3
       with:
-        tag_name: ${{ steps.tag.outputs.release_tag }}
-        release_name: SSID Logger Build ${{ steps.tag.outputs.release_tag }}
-        body: |
-          Automated build from commit ${{ github.sha }}
-          
-          Download the APK below to install on your Android device.
-          
-          **Installation Instructions:**
-          1. Download the APK to your Android device
-          2. Open the file (you may need a file manager app)
-          3. If prompted, enable "Install from unknown sources" in Settings
-          4. Install the app
-          
-          **Required Permissions:**
-          - Location (for WiFi SSID access)
-          - Background location (for monitoring when app is closed)
-          
-          **Note:** This is a debug build for testing purposes.
-        draft: false
-        prerelease: false
+        name: ssid-logger-debug
+        path: app/app/build/outputs/apk/debug/app-debug.apk
+        retention-days: 30
     
-    - name: Upload Release APK
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: app/app/build/outputs/apk/debug/app-debug.apk
-        asset_name: ssid-logger-debug.apk
-        asset_content_type: application/vnd.android.package-archive
+    - name: Generate download URL
+      run: |
+        echo "### APK Build Complete! 🎉" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "Download the APK from the Actions tab:" >> $GITHUB_STEP_SUMMARY
+        echo "1. Go to [Actions](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> $GITHUB_STEP_SUMMARY
+        echo "2. Scroll down to 'Artifacts'" >> $GITHUB_STEP_SUMMARY
+        echo "3. Click on 'ssid-logger-debug' to download" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "Build: \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
