@@ -158,35 +158,35 @@ Then read the PNG file to view it.
 - [x] Create settings storage (SharedPreferences/DataStore)
 
 ### Phase 4: Foreground Service
-- [ ] Create WifiMonitorService extending Service
-- [ ] Implement foreground notification
-- [ ] Add start/stop service controls
-- [ ] Handle service lifecycle properly
+- [x] Create WifiMonitorService extending Service
+- [x] Implement foreground notification
+- [x] Add start/stop service controls
+- [x] Handle service lifecycle properly
 
 ### Phase 5: Network Monitoring
-- [ ] Implement NetworkCallback
-- [ ] Register callback with ConnectivityManager
-- [ ] Extract SSID from WifiInfo
-- [ ] Track previous SSID state
-- [ ] Detect SSID changes
+- [x] Implement NetworkCallback
+- [x] Register callback with ConnectivityManager
+- [x] Extract SSID from WifiInfo
+- [x] Track previous SSID state
+- [x] Detect SSID changes
 
 ### Phase 6: Data Model & Logging
-- [ ] Create data class for SSID change event
-- [ ] Implement JSON serialization (Gson/Kotlinx.serialization)
-- [ ] Add timestamp generation
+- [x] Create data class for SSID change event
+- [x] Implement JSON serialization (Gson/Kotlinx.serialization)
+- [x] Add timestamp generation
 - [ ] Queue events if offline
 
 ### Phase 7: Network Communication
-- [ ] Set up HTTP client (OkHttp/Retrofit)
-- [ ] Implement POST request to endpoint
+- [x] Set up HTTP client (OkHttp/Retrofit)
+- [x] Implement POST request to endpoint
 - [ ] Add retry logic with exponential backoff
-- [ ] Handle network failures
+- [x] Handle network failures
 
 ### Phase 8: Error Handling & Notifications
-- [ ] Create notification channel
-- [ ] Show notification on endpoint unreachable
-- [ ] Implement error recovery
-- [ ] Add user-friendly error messages
+- [x] Create notification channel
+- [x] Show notification on endpoint unreachable
+- [x] Implement error recovery
+- [x] Add user-friendly error messages
 
 ### Phase 9: Testing & Optimization
 - [ ] Test SSID change detection
